@@ -1,0 +1,48 @@
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+
+[credential]
+{{- if ne (env "WSL_DISTRO_NAME") "" }}
+	helper = /c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe
+{{- else }}
+	helper = store
+{{- end }}
+
+[user]
+{{- if eq .chezmoi.username "miyakshi" }}
+	email = miyakshi@microsoft.com
+	name = Michael Yakshin
+{{- else }}
+	email = greycat.na.kor@gmail.com
+	name = Mikhail Yakshin
+{{- end }}
+
+[alias]
+	st = status
+	ci = commit
+	br = branch
+	co = checkout
+	di = diff
+
+[push]
+	default = simple
+
+[tig]
+	line-graphics = utf-8
+
+{{ if eq .chezmoi.os "windows" }}
+[merge]
+	tool = kdiff3
+
+[mergetool "kdiff3"]
+	path = C:/Program Files (x86)/KDiff3/kdiff3.exe
+	trustExitCode = false
+{{ end }}
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
