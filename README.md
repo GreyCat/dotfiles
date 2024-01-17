@@ -20,3 +20,9 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply GreyCat
 ```shell
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --one-shot GreyCat
 ```
+
+## Updates
+
+```shell
+chezmoi update
+```
