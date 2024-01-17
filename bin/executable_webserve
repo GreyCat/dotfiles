@@ -2,7 +2,9 @@
 
 # Launches simple static web server.
 #
-# Default invocation serves current directory at *:5000
+# webserve [port] [htdocs_dir]
+#
+# Default invocation serves current directory (.) at *:5000
 
 PORT="$1"
 HTDOCS_DIR="$2"
@@ -10,4 +12,10 @@ HTDOCS_DIR="$2"
 [ -n "$PORT" ] || PORT=5000
 [ -n "$HTDOCS_DIR" ] || HTDOCS_DIR=.
 
-ruby -run -e httpd -- -p "$PORT" "$HTDOCS_DIR"
+if ruby --version >/dev/null; then
+	ruby -run -e httpd -- -p "$PORT" "$HTDOCS_DIR"
+elif python3 --version >/dev/null; then
+	python3 -m http.server -d "$HTDOCS_DIR" "$PORT"
+elif python --version >/dev/null; then
+	python -m http.server -d "$HTDOCS_DIR" "$PORT"
+fi
