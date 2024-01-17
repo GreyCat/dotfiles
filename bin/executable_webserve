@@ -1,0 +1,13 @@
+#!/bin/sh -ef
+
+# Launches simple static web server.
+#
+# Default invocation serves current directory at *:5000
+
+PORT="$1"
+HTDOCS_DIR="$2"
+
+[ -n "$PORT" ] || PORT=5000
+[ -n "$HTDOCS_DIR" ] || HTDOCS_DIR=.
+
+ruby -run -e httpd -- -p "$PORT" "$HTDOCS_DIR"
