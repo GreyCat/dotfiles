@@ -21,6 +21,13 @@ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply GreyCat
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --one-shot GreyCat
 ```
 
+### Windows devbox
+
+```powershell
+choco install -y chezmoi
+chezmoi init GreyCat --apply
+```
+
 ## Updates
 
 ```shell
