@@ -9,6 +9,14 @@ sudo snap install chezmoi --classic
 chezmoi init GreyCat --apply
 ```
 
+### Full-featured RedHat
+
+```shell
+wget https://github.com/twpayne/chezmoi/releases/download/v2.48.2/chezmoi-2.48.2-x86_64.rpm
+sudo rpm -U chezmoi-2.48.2-x86_64.rpm
+chezmoi init GreyCat --apply
+```
+
 ### Bare Linux
 
 ```shell
