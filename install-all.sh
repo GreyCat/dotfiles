@@ -12,3 +12,11 @@ if [ "$ID" = ubuntu ]; then
 
     sudo chsh -s /usr/bin/fish "$USER"
 fi
+
+# Create symlinks for /c and /w
+for drive in c w; do
+    if [ -r /mnt/$drive ] && [ ! -r /$drive ]; then
+        echo "Creating symlink for /$drive"
+        sudo ln -sf /mnt/$drive /$drive
+    fi
+done
