@@ -1,0 +1,23 @@
+#!/bin/sh -ef
+
+# Pretty-print JSON: stream in, stream out.
+# Standard formatting: 4 spaces per level.
+#
+# json_pp <dirty.json >nice.json
+
+if which jq >/dev/null 2>/dev/null; then
+	jq --indent 4 .
+elif which python >/dev/null 2>/dev/null; then
+	python -m json.tool
+elif which python3 >/dev/null 2>/dev/null; then
+	python3 -m json.tool
+elif which json_reformat >/dev/null 2>/dev/null; then
+	# Formats empty array as 3 lines instead of 1, no indentation control.
+	json_reformat
+elif which ruby >/dev/null 2>/dev/null; then
+	# Formats empty array as 3 lines instead of 1.
+	ruby -e 'require "json"; puts JSON.pretty_generate(JSON.parse($stdin.read), :indent => "    ")'
+else
+	echo "No JSON engine found, bailing out."
+	exit 1
+fi
