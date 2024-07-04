@@ -1,0 +1,25 @@
+#!/bin/sh -ef
+
+# Pretty-print XML: stream in, stream out.
+# Standard formatting: 2 spaces per level.
+#
+# xml_pp <dirty.xml >nice.xml
+
+if which xmllint >/dev/null 2>/dev/null; then
+    xmllint --format -
+elif which xsltproc >/dev/null 2>/dev/null; then
+    echo '<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"><xsl:output method="xml" indent="yes"
+    /><xsl:strip-space elements="*"/><xsl:template match="/"><xsl:copy-of select="."/></xsl:template></xsl:stylesheet>' >/tmp/indent.xsl
+    xsltproc --nonet /tmp/indent.xsl -
+    rm /tmp/indent.xsl
+elif which python3 >/dev/null 2>/dev/null; then
+	python3 -c 'import sys; import xml.dom.minidom; sys.stdout.write(xml.dom.minidom.parse(sys.stdin).toprettyxml(indent="  "))'
+elif which python >/dev/null 2>/dev/null; then
+	python -c 'import sys; import xml.dom.minidom; sys.stdout.write(xml.dom.minidom.parse(sys.stdin).toprettyxml(indent="  "))'
+elif which ruby >/dev/null 2>/dev/null; then
+    # REXML::Document is not installed by default anymore, might cause problems
+    ruby -rrexml/document -e 'puts REXML::Document.new($stdin).write($stdout, 2)'
+else
+	echo "No XML engine found, bailing out." >&2
+	exit 1
+fi
