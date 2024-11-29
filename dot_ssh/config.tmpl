@@ -1,7 +1,9 @@
+{{ if ne .chezmoi.os "windows" }}
 Host *
 	ControlPath ~/.ssh/controlmasters/%r@%h..%p
 	ControlMaster auto
 	ControlPersist 10m
 
+{{ end }}
 Include ~/.ssh/hosts.d/*
 Include ~/.ssh/vms.d/*
