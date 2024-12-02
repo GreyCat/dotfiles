@@ -20,3 +20,10 @@ for drive in c w; do
         sudo ln -sf /mnt/$drive /$drive
     fi
 done
+
+# If we're running on Windows machine, try our best to symlink Linux user paths to Windows one
+for linkdir in Desktop Documents Downloads; do
+    if [ ! -e "$HOME/$linkdir" ] && [ -d "/mnt/c/Users/$USER/$linkdir" ]; then
+        ln -s "/mnt/c/Users/$USER/$linkdir" "$HOME/$linkdir"
+    fi
+done
